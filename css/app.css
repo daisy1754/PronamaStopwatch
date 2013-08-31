@@ -1,0 +1,27 @@
+#buttons {
+  width: 100%;
+  position: absolute;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  bottom: 0;
+}
+
+.button {
+  text-align: center;
+}
+
+#start_button {
+  width: 100%;
+}
+
+#restart_button, #stop_button {
+  width: 50%;
+  display: none;
+  float: left;
+}
+
+#reset_button {
+  width: 50%;
+  display: none;
+  float: right;
+}
