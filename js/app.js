@@ -36,12 +36,16 @@ function handleStop() {
 
 function handleRestart() {
   setUIState(STATE_RUNNING);
+  stopwatch.restart(
+  	  parseFloat(timeText.innerHTML) * 1000, {onTimeChange: updateTimeText});
 }
 
 function handleReset() {
   if (currentState == STATE_STOPPED) {
   	setUIState(STATE_INIT);
   }
+  updateTimeText(0);
+  stopwatch.reset();
 }
 
 function setUIState(state) {
