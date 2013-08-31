@@ -5,7 +5,6 @@ var startButton, stopButton, restartButton, resetButton;
 var stopwatch = new StopWatch();
 
 window.onload = function() {
-  var stopwatch = new StopWatch();
   startButton = getById("start_button");
   restartButton = getById("restart_button");
   resetButton = getById("reset_button");
