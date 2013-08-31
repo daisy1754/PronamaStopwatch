@@ -3,8 +3,11 @@ var currentState;
 var timeText;
 var startButton, stopButton, restartButton, resetButton;
 var stopwatch = new StopWatch();
+var voicePlayer;
 
 window.onload = function() {
+  voicePlayer = new AudioPlayer(
+	{baseUrl: "resources/sound/kei_voice/"});
   startButton = getById("start_button");
   restartButton = getById("restart_button");
   resetButton = getById("reset_button");
@@ -14,6 +17,7 @@ window.onload = function() {
   addEvent(stopButton, 'click', handleStop);
   addEvent(restartButton, 'click', handleRestart);
   addEvent(resetButton, 'click', handleReset);
+  voicePlayer.play('yoroshiku.wav');
 };
 
 function updateTimeText(millis) {
@@ -26,17 +30,20 @@ function updateTimeText(millis) {
 function handleStart() {
   setUIState(STATE_RUNNING);
   stopwatch.start({onTimeChange: updateTimeText});
+  voicePlayer.play('start.wav');
 }
 
 function handleStop() {
   setUIState(STATE_STOPPED);
   updateTimeText(stopwatch.stop());
+  voicePlayer.play('shuryo.wav');
 }
 
 function handleRestart() {
   setUIState(STATE_RUNNING);
   stopwatch.restart(
   	  parseFloat(timeText.innerHTML) * 1000, {onTimeChange: updateTimeText});
+  voicePlayer.play('start.wav');
 }
 
 function handleReset() {
@@ -45,6 +52,7 @@ function handleReset() {
   }
   updateTimeText(0);
   stopwatch.reset();
+  voicePlayer.play('ga.wav');
 }
 
 function setUIState(state) {
