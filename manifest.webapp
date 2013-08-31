@@ -1,7 +1,7 @@
 {
   "version": "0.1",
-  "name": "Pronama StopWatch",
-  "description": "StopWatch with cute girl character and voice of Kei Kurei a.k.a Pronama-chan",
+  "name": "Stopwatch Pronama-chan",
+  "description": "Stopwatch with cute girl character and voice of Kei Kurei a.k.a Pronama-chan",
   "launch_path": "/index.html",
   "developer": {
     "name": "daisy1754"
