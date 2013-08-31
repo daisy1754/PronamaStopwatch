@@ -5,6 +5,7 @@ var timeText;
 var startButton, stopButton, restartButton, resetButton;
 var keiImage;
 var stopwatch = new StopWatch();
+var imageAnimator;
 var voicePlayer;
 
 window.onload = function() {
@@ -17,7 +18,12 @@ window.onload = function() {
   timeText = getById("time");
   keiImage = getById("kei");
   resizeKeiImage();
-  keiImage.src = keiImagePath('default');
+  imageAnimator = new ImageAnimator(keiImage, keiImagePath('default'));
+  imageAnimator.play([
+    {src: keiImagePath('default'), duration: 1500},
+    {src: keiImagePath('default_to_smile'), duration: 50},
+    {src: keiImagePath('smile'), duration: 1000}
+  ]);
   addEvent(startButton, 'click', handleStart);
   addEvent(stopButton, 'click', handleStop);
   addEvent(restartButton, 'click', handleRestart);
@@ -51,12 +57,16 @@ function handleStart() {
   setUIState(STATE_RUNNING);
   stopwatch.start({onTimeChange: updateTimeText});
   voicePlayer.play('start.wav');
+  imageAnimator.setDefaultSrc(keiImagePath('good'));
+  imageAnimator.stopAnimation(true);
 }
 
 function handleStop() {
   setUIState(STATE_STOPPED);
   updateTimeText(stopwatch.stop());
   voicePlayer.play('shuryo.wav');
+  imageAnimator.setDefaultSrc(keiImagePath('default'));
+  imageAnimator.stopAnimation(true);
 }
 
 function handleRestart() {
@@ -64,6 +74,8 @@ function handleRestart() {
   stopwatch.restart(
   	  parseFloat(timeText.innerHTML) * 1000, {onTimeChange: updateTimeText});
   voicePlayer.play('start.wav');
+  imageAnimator.setDefaultSrc(keiImagePath('good'));
+  imageAnimator.stopAnimation(true);
 }
 
 function handleReset() {
@@ -73,6 +85,7 @@ function handleReset() {
   updateTimeText(0);
   stopwatch.reset();
   voicePlayer.play('ga.wav');
+  imageAnimator.play([{src: keiImagePath('ga'), duration: 300}]);
 }
 
 function setUIState(state) {
