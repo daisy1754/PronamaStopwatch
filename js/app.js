@@ -8,7 +8,28 @@ var stopwatch = new StopWatch();
 var imageAnimator;
 var voicePlayer;
 
+var started = false;
+
 window.onload = function() {
+  var preloader = html5Preloader();
+  preloader.addFiles([
+      keiVoicePath('yoroshiku'), keiVoicePath('start'), keiVoicePath('shuryo'),
+      keiVoicePath('ga'), keiImagePath('default'), keiImagePath('good'), 
+      keiImagePath('default_to_smile'), keiImagePath('smile'), keiImagePath('ga'),
+  ]);
+  preloader.on('finish', startIfReady);
+  setTimeout(startIfReady, /* Timeout after ten secs */ 10 * 1000);
+};
+
+function startIfReady() {
+  if (!started) {
+  started = true;
+    main();
+  }
+}
+
+function main() {
+  getById("mask").style.display = 'none';
   voicePlayer = new AudioPlayer({baseUrl: "resources/sound/kei_voice/"});
   startButton = getById("start_button");
   restartButton = getById("restart_button");
@@ -32,6 +53,10 @@ window.onload = function() {
 
 function keiImagePath(name) {
   return "resources/images/" + name + ".png";
+}
+
+function keiVoicePath(name) {
+  return "resources/sound/kei_voice/" + name + ".wav";
 }
 
 function resizeKeiImage() {
