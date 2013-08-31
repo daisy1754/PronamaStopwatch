@@ -1,6 +1,19 @@
-body, button {
+body, button, h1{
   padding: 0;
   margin: 0;
+}
+
+header {
+  padding: 0;
+  padding-left: 0.8em;
+  background-color: #3f3f3f;
+  border-bottom: 1px solid #454545;
+  color: #fff;
+}
+
+header h1 {
+  line-height: 2em;
+  font-size: 1.3em;
 }
 
 #time {
