@@ -1,7 +1,9 @@
 var STATE_INIT = 0, STATE_RUNNING = 1, STATE_STOPPED = 2;
+var KEI_IMAGE_HEIGHT = 1004, KEI_IMAGE_WIDTH = 459;
 var currentState;
 var timeText;
 var startButton, stopButton, restartButton, resetButton;
+var keiImage;
 var stopwatch = new StopWatch();
 var voicePlayer;
 
@@ -13,12 +15,30 @@ window.onload = function() {
   resetButton = getById("reset_button");
   stopButton = getById("stop_button");
   timeText = getById("time");
+  keiImage = getById("kei");
+  resizeKeiImage();
+  keiImage.src = keiImagePath('default');
   addEvent(startButton, 'click', handleStart);
   addEvent(stopButton, 'click', handleStop);
   addEvent(restartButton, 'click', handleRestart);
   addEvent(resetButton, 'click', handleReset);
   voicePlayer.play('yoroshiku.wav');
 };
+
+function keiImagePath(name) {
+  return "resources/images/" + name + ".png";
+}
+
+function resizeKeiImage() {
+  var buttons = getById("buttons");
+  var height = buttons.getBoundingClientRect().top - keiImage.getBoundingClientRect().top;
+  var ratio = parseFloat(height) / KEI_IMAGE_HEIGHT;
+  if (ratio >= 1) {
+  	return;
+  }
+  keiImage.style.height = parseInt(height) + 'px';
+  keiImage.style.width = parseInt(KEI_IMAGE_WIDTH * ratio) + 'px';
+}
 
 function updateTimeText(millis) {
   var sec = parseInt(millis / 1000);
