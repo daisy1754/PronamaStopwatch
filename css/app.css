@@ -20,6 +20,15 @@ header h1 {
   font-size: 1.3em;
 }
 
+header .info a {
+  color: #fff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-top: 0.5em;
+  padding-right: 2em;
+}
+
 #time {
   width: 100%;
   text-align: center;
