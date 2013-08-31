@@ -15,7 +15,7 @@ var StopWatch = (function () {
   };
 
   StopWatch.prototype._start = function(changeListener) {
-  	this.running = true;
+    this.running = true;
     if (changeListener && changeListener.onTimeChange) {
       this.changeListener = changeListener;
     }
@@ -23,12 +23,12 @@ var StopWatch = (function () {
   };
 
   StopWatch.prototype.reset = function() {
-  	this.startTimeMillis = new Date().getTime();
+    this.startTimeMillis = new Date().getTime();
   };
 
   StopWatch.prototype.restart = function(currentMillis, changeListener) {
-  	this.startTimeMillis = new Date().getTime() - currentMillis;
-  	console.log("restart");
+    this.startTimeMillis = new Date().getTime() - currentMillis;
+    console.log("restart");
     this._start(changeListener);
   };
 

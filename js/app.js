@@ -9,8 +9,7 @@ var imageAnimator;
 var voicePlayer;
 
 window.onload = function() {
-  voicePlayer = new AudioPlayer(
-	{baseUrl: "resources/sound/kei_voice/"});
+  voicePlayer = new AudioPlayer({baseUrl: "resources/sound/kei_voice/"});
   startButton = getById("start_button");
   restartButton = getById("restart_button");
   resetButton = getById("reset_button");
@@ -40,7 +39,7 @@ function resizeKeiImage() {
   var height = buttons.getBoundingClientRect().top - keiImage.getBoundingClientRect().top;
   var ratio = parseFloat(height) / KEI_IMAGE_HEIGHT;
   if (ratio >= 1) {
-  	return;
+    return;
   }
   keiImage.style.height = parseInt(height) + 'px';
   keiImage.style.width = parseInt(KEI_IMAGE_WIDTH * ratio) + 'px';
@@ -72,7 +71,7 @@ function handleStop() {
 function handleRestart() {
   setUIState(STATE_RUNNING);
   stopwatch.restart(
-  	  parseFloat(timeText.innerHTML) * 1000, {onTimeChange: updateTimeText});
+      parseFloat(timeText.innerHTML) * 1000, {onTimeChange: updateTimeText});
   voicePlayer.play('start.wav');
   imageAnimator.setDefaultSrc(keiImagePath('good'));
   imageAnimator.stopAnimation(true);
@@ -80,7 +79,7 @@ function handleRestart() {
 
 function handleReset() {
   if (currentState == STATE_STOPPED) {
-  	setUIState(STATE_INIT);
+    setUIState(STATE_INIT);
   }
   updateTimeText(0);
   stopwatch.reset();
@@ -90,18 +89,18 @@ function handleReset() {
 
 function setUIState(state) {
   switch (state) {
-  	case STATE_INIT:
-  	  showElms([startButton]);
-  	  hideElms([stopButton, restartButton, resetButton]);
-  	  break;
-  	case STATE_RUNNING:
-  	  showElms([stopButton, resetButton]);
-  	  hideElms([startButton, restartButton]);
-  	  break;
-  	case STATE_STOPPED:
-  	  showElms([restartButton, resetButton]);
-  	  hideElms([startButton, stopButton]);
-  	  break;
+    case STATE_INIT:
+      showElms([startButton]);
+      hideElms([stopButton, restartButton, resetButton]);
+      break;
+    case STATE_RUNNING:
+      showElms([stopButton, resetButton]);
+      hideElms([startButton, restartButton]);
+      break;
+    case STATE_STOPPED:
+      showElms([restartButton, resetButton]);
+      hideElms([startButton, stopButton]);
+      break;
   }
   currentState = state;
 }
