@@ -48,7 +48,7 @@ header h1 {
   float: left;
 }
 
-#reset_button {
+#lap_button, #reset_button {
   width: 50%;
   display: none;
   float: right;
