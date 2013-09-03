@@ -17,3 +17,15 @@ function hideElms(elms) {
 function addEvent(elm, event, handler) {
   elm.addEventListener(event, handler);
 }
+
+function removeChildren(elm) {
+  while (elm.firstChild) {
+    elm.removeChild(elm.firstChild);
+  }
+}
+
+function createElementWithClass(tag, className) {
+  var e = document.createElement(tag);
+  e.className = className;
+  return e;
+}

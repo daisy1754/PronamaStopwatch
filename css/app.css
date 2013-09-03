@@ -32,9 +32,25 @@ header h1 {
   margin: 0 auto;
 }
 
+#laps_container {
+  position: absolute;
+  right: 0.1rem;
+  bottom: 3.9rem;
+  max-height: 90%;
+}
+
+.lap {
+  text-align: right;
+  padding: 0.2rem;
+  padding-left: 0.5rem;
+  border-top: 1px solid #777;
+  border-left: 1px solid #777;
+}
+
 #buttons {
   width: 100%;
   position: absolute;
+  height: 3.9rem;
   bottom: 0;
 }
 

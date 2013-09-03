@@ -32,12 +32,15 @@ var StopWatch = (function () {
     this._start(changeListener);
   };
 
+  StopWatch.prototype.getPassedTimeMillis = function() {
+    return new Date().getTime() - this.startTimeMillis;
+  };
+
   StopWatch.prototype.notifyPassedTime = function() {
     if (!this.running) {
       return;
     }
-    var passedTimeMillis = new Date().getTime() - this.startTimeMillis;
-    this.changeListener.onTimeChange(passedTimeMillis);
+    this.changeListener.onTimeChange(this.getPassedTimeMillis());
     setTimeout(this.notifyPassedTime.bind(this), 5);
   };
 

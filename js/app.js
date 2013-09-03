@@ -4,6 +4,7 @@ var currentState;
 var timeText;
 var startButton, stopButton, restartButton, lapButton, resetButton;
 var keiImage;
+var lapsController;
 var stopwatch = new StopWatch();
 var imageAnimator;
 var voicePlayer;
@@ -17,6 +18,8 @@ window.onload = function() {
   stopButton = getById("stop_button");
   timeText = getById("time");
   keiImage = getById("kei");
+  lapsController = new LapsController(
+      getById("laps_container"), parseMillisToText);
   resizeKeiImage();
   imageAnimator = new ImageAnimator(keiImage, keiImagePath('default'));
   imageAnimator.play([
@@ -48,10 +51,16 @@ function resizeKeiImage() {
 }
 
 function updateTimeText(millis) {
-  var sec = parseInt(millis / 1000);
-  var handred_millis = parseInt(millis % 1000 / 100);
+  timeText.innerHTML = parseMillisToText(millis);
+}
+
+function parseMillisToText(millis) {
   var ten_millis = parseInt(millis % 100 / 10);
-  timeText.innerHTML = sec + "." + handred_millis + "" + ten_millis;
+  var handred_millis = parseInt(millis % 1000 / 100);
+  var sec = parseInt(millis / 1000);
+  var min = parseInt(sec / 60);
+  return ((min > 0) ? (min + ":") : "") 
+      + sec + "." + handred_millis + "" + ten_millis;
 }
 
 function handleStart() {
@@ -80,11 +89,13 @@ function handleRestart() {
 }
 
 function handleLap() {
+  lapsController.add(stopwatch.getPassedTimeMillis());
   playGa();
 }
 
 function handleReset() {
   setUIState(STATE_INIT);
+  lapsController.clear();
   updateTimeText(0);
   stopwatch.reset();
   playGa();
@@ -112,3 +123,36 @@ function setUIState(state) {
   }
   currentState = state;
 }
+
+var LapsController = (function () {
+  function LapsController(lapsContainerElm, timeToLabel) {
+    this.lapsContainerElm = lapsContainerElm;
+    this.timeToLabel = timeToLabel || function(t) {return t;};
+    this.numOfChildren = 0;
+    this.lastTimeInMillis = 0;
+  }
+
+  LapsController.prototype.add = function(timeInMillis) {
+    var lapElm = createElementWithClass('div', 'lap');
+    this.numOfChildren++;
+    var currentTimeElm = createElementWithClass('div', 'current');
+    currentTimeElm.innerHTML
+        = this.numOfChildren + ' | ' + this.timeToLabel(timeInMillis);
+    var timeDiffElm = createElementWithClass('div', 'diff');
+    timeDiffElm.innerHTML 
+        = '+ ' + this.timeToLabel(timeInMillis - this.lastTimeInMillis);
+    lapElm.appendChild(currentTimeElm);
+    lapElm.appendChild(timeDiffElm);
+    this.lapsContainerElm.appendChild(lapElm);
+    this.lastTimeInMillis = timeInMillis;
+  };
+
+  LapsController.prototype.clear = function() {
+    removeChildren(this.lapsContainerElm);
+    this.numOfChildren = 0;
+    this.lastTimeInMillis = 0;
+  };
+
+  return LapsController;
+})();
+
